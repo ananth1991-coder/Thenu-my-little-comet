@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Thenu 💜</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --purple: #6a1b9a;
+    --light-purple: #e1bee7;
+    --accent-pink: #ff85a1;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: #fdf6ff;
+    background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Shooting Stars */
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: shooting 3s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes shooting {
+    0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 1; }
+    50% { opacity: 1; }
+    100% { transform: translateX(-600px) translateY(600px) rotate(-45deg) scale(1.2); opacity: 0; }
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 15px 35px rgba(106, 27, 154, 0.1);
+    z-index: 10;
+    position: relative;
+    border: 2px solid white;
+  }
+
+  h1 { color: var(--purple); font-size: 2rem; margin-top: 15px; }
+
+  /* Capybara with Bow */
+  .capy-img {
+    width: 180px;
+    height: 180px;
+    background: url('https://i.imgur.com/Jb9ZQnY.png') no-repeat center/contain;
+    margin: 0 auto;
+    position: relative;
+  }
+  .capy-img::after {
+    content: '🎀';
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    font-size: 45px;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+    animation: wiggle 2s infinite ease-in-out;
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(15deg); }
+    50% { transform: rotate(25deg); }
+  }
+
+  .btn-group {
+    margin-top: 30px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  button {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    transition: transform 0.2s;
+  }
+
+  #yesBtn {
+    background: var(--purple);
+    color: white;
+    box-shadow: 0 5px 15px rgba(106, 27, 154, 0.3);
+  }
+
+  #yesBtn:hover { transform: scale(1.1); }
+
+  #noBtn {
+    background: white;
+    color: var(--purple);
+    position: absolute;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  .stylish-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: var(--purple);
+    line-height: 1.3;
+  }
+
+  .relief-gif {
+    width: 180px;
+    margin-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<audio id="yaySound">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" type="audio/mpeg">
+</audio>
+<audio id="bgMusic" loop>
+  <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rain-and-Flowers-Cute-Background-Music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="stars-container"></div>
+
+<div class="container" id="main">
+  <div class="capy-img"></div>
+  <h1>Thenu 💜<br>Will u be my Valentine?</h1>
+  
+  <div class="btn-group">
+    <button id="yesBtn">YES 💜</button>
+    <button id="noBtn">no</button>
+  </div>
+</div>
+
+<div class="container hidden" id="final">
+  <div class="stylish-text">
+    To infinity and beyond...<br>
+    Locked forever with Thenu 🔒💜
+  </div>
+  <img src="https://media.giphy.com/media/l41lTfuxmSrqupO80/giphy.gif" class="relief-gif" alt="relief">
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const yaySound = document.getElementById("yaySound");
+const bgMusic = document.getElementById("bgMusic");
+
+// Float Away Logic
+document.addEventListener("mousemove", (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    const btnRect = noBtn.getBoundingClientRect();
+    const btnCenterX = btnRect.left + btnRect.width / 2;
+    const btnCenterY = btnRect.top + btnRect.height / 2;
+
+    const distance = Math.hypot(x - btnCenterX, y - btnCenterY);
+
+    if (distance < 85) {
+        const newX = Math.random() * (window.innerWidth - btnRect.width);
+        const newY = Math.random() * (window.innerHeight - btnRect.height);
+        
+        noBtn.style.left = Math.max(10, Math.min(newX, window.innerWidth - 110)) + "px";
+        noBtn.style.top = Math.max(10, Math.min(newY, window.innerHeight - 60)) + "px";
+    }
+});
+
+// Shooting Stars
+function createStars() {
+    const container = document.getElementById('stars-container');
+    const colors = ['#ffffff', '#e1bee7', '#ff85a1', '#ba68c8'];
+    
+    setInterval(() => {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.background = colors[Math.floor(Math.random() * colors.length)];
+        star.style.boxShadow = `0 0 10px 2px ${star.style.background}`;
+        star.style.left = (Math.random() * window.innerWidth + 200) + 'px';
+        star.style.top = (Math.random() * window.innerHeight / 2) + 'px';
+        container.appendChild(star);
+        setTimeout(() => star.remove(), 3000);
+    }, 600);
+}
+createStars();
+
+// Click Action
+yesBtn.onclick = () => {
+  // Play Sounds
+  yaySound.play();
+  bgMusic.volume = 0.5;
+  bgMusic.play();
+
+  // Switch Screens
+  document.getElementById("main").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+};
+</script>
+
+</body>
+</html>
